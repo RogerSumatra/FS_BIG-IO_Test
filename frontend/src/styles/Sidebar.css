@@ -1,0 +1,38 @@
+.sidebar {
+    width: 200px;
+    background-color: #ffffff;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #00a8cc;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 1rem 0;
+    color: #555;
+    cursor: pointer;
+}
+
+.menu .active {
+    font-weight: bold;
+    color: #00a8cc;
+}
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: 80%;
+}

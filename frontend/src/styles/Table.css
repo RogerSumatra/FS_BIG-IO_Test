@@ -1,0 +1,29 @@
+.story-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.story-table thead {
+    background-color: #f9f9f9;
+}
+
+.story-table th, .story-table td {
+    text-align: left;
+    padding: 10px;
+    font-family: sans-serif;
+}
+
+.story-table tbody {
+    background-color: white;
+}
+
+.story-table .publish {
+    color: #00cc66;
+    font-weight: bold;
+}
+
+.story-table .draft {
+    color: #ffaa00;
+    font-weight: bold;
+}
