@@ -1,0 +1,19 @@
+.chapter-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.chapter-table thead {
+    background-color: #f9f9f9;
+}
+
+.chapter-table th, .chapter-table td {
+    text-align: left;
+    padding: 10px;
+    font-family: sans-serif;
+}
+
+.chapter-table tbody {
+    background-color: white;
+}

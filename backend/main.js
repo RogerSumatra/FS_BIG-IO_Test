@@ -48,11 +48,16 @@ app.get('/api/stories/:storyid', async (req, res) => {
 app.post('/api/stories', async (req, res) => {
     try {
         const { title, author, category, tags, status } = req.body;
+
+        if (!title || !author || !category || !status) {
+            return res.status(400).json({ error: "All fields are required" });
+        }
+
         const newStory = await Story.create({
             title,
             author,
             category,
-            tags: tags.join(','),
+            tags: Array.isArray(tags) ? tags.join(',') : "",
             status,
         });
         res.status(201).json(newStory);

@@ -17,8 +17,16 @@ export const getStoryById = async (id) => {
 
 // Add new story
 export const addStory = async (story) => {
-  const response = await axios.post(`${API_BASE_URL}/stories`, story);
-  return response.data;
+  try {
+    const response = await axios.post(`${API_BASE_URL}/stories`, story, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.error || "Failed to add story");
+  }
 };
 
 // Get all chapters in a story

@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import { useState } from 'react';
 import '../styles/Header.css';
+import filter from '../assets/filter.png';
 
 const Header = ({ onSearch }) => {
     const [searchText, setSearchText] = useState('');
@@ -7,7 +9,7 @@ const Header = ({ onSearch }) => {
     const handleSearchChange = (e) => {
         const value = e.target.value;
         setSearchText(value);
-        onSearch(value); // Memanggil fungsi pencarian yang diberikan dari parent
+        onSearch(value);
     };
 
     return (
@@ -19,7 +21,12 @@ const Header = ({ onSearch }) => {
                 onChange={handleSearchChange}
                 className="search-box"
             />
-            <button className="add-story-btn" >+ Add Story</button>
+            <div className="buttons-container">
+                <button className="filter-btn">
+                    <img className="filter-img" src={filter} alt="filter" />
+                </button>
+                <Link to="/stories/add" className="add-story-btn">+ Add Story</Link>
+            </div>
         </div>
     );
 };
