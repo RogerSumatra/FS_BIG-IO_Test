@@ -1,7 +1,10 @@
-/* eslint-disable react/prop-types */
+import { useNavigate } from "react-router-dom";
+import { Ellipsis } from 'lucide-react';
 import '../styles/Table.css';
 
 const Table = ({ data }) => {
+    const navigate = useNavigate();
+
     return (
         <table className="story-table">
             <thead>
@@ -12,6 +15,7 @@ const Table = ({ data }) => {
                     <th>Category</th>
                     <th>Keyword</th>
                     <th>Status</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +27,15 @@ const Table = ({ data }) => {
                         <td>{item.category}</td>
                         <td>{item.tags.join(', ')}</td>
                         <td className={item.status.toLowerCase()}>{item.status}</td>
+                        <Ellipsis />
+                        <td>
+                            <button onClick={() => navigate(`/stories/${item.id}/edit`)}>
+                                Edit
+                            </button>
+                            <button onClick={() => navigate(`/stories/${item.id}/view`)}>
+                                View
+                            </button>
+                        </td>
                     </tr>
                 ))}
             </tbody>

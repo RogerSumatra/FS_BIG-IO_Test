@@ -47,15 +47,16 @@ app.get('/api/stories/:storyid', async (req, res) => {
 
 app.post('/api/stories', async (req, res) => {
     try {
-        const { title, author, category, tags, status } = req.body;
+        const { title, author, synopsis, category, tags, status } = req.body;
 
-        if (!title || !author || !category || !status) {
+        if (!title || !author || !synopsis || !category || !status) {
             return res.status(400).json({ error: "All fields are required" });
         }
 
         const newStory = await Story.create({
             title,
             author,
+            synopsis,
             category,
             tags: Array.isArray(tags) ? tags.join(',') : "",
             status,
@@ -72,9 +73,10 @@ app.put('/api/stories/:storyid', async (req, res) => {
         if (!story) {
             return res.status(404).json({ error: 'Story not found' });
         }
-        const { title, author, category, tags, status } = req.body;
+        const { title, author, synopsis, category, tags, status } = req.body;
         story.title = title;
         story.author = author;
+        story.synopsis = synopsis;
         story.category = category;
         story.tags = tags.join(',');
         story.status = status;
@@ -126,9 +128,9 @@ app.get('/api/chapter/:chapterid', async(req, res) => {
     }
 });
 
-app.post('/api/stories/:chapterid/chapter', async (req, res) => {
+app.post('/api/stories/:storyid/chapter', async (req, res) => {
     try {
-        const id = req.params.chapterid;
+        const id = req.params.storyid;
         const { chapterTitle, chapterContent } = req.body;
 
         const chapter = await Chapter.create({
@@ -162,7 +164,6 @@ app.put('/api/chapter/:chapterid', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
-
 
 app.delete('/api/chapter/:chapterid', async (req, res) => {
     try {

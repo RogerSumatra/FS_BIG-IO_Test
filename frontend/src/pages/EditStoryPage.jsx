@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { addStory } from "../api/api";
 import Sidebar from "../components/Sidebar";
-import "./../styles/AddStoryPage.css";
+import ChapterTable from "../components/ChapterTable";
+import "./../styles/EditStoryPage.css";
 
-const AddStoryPage = () => {
+// API functions
+import { getChaptersByStoryId, getStoryById, updateStory } from "../api/api";
+
+const EditStoryPage = () => {
+    const { storyid } = useParams();
     const navigate = useNavigate();
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState("");
 
-    // State untuk story
-    const [title, setTitle] = useState("");
+    // State untuk data story
     const [storyData, setStoryData] = useState({
         title: "",
         author: "",
@@ -21,38 +24,81 @@ const AddStoryPage = () => {
         status: "",
     });
 
-    // Handle adding tags
+    const [ chapterData, setChapterData ] = useState([])
+
+    const [loading, setLoading] = useState(false); // Loading state untuk tombol save
+    const [error, setError] = useState(null); // Untuk menampilkan error jika ada
+
+    // Ambil data story dari backend saat halaman dimuat
+    useEffect(() => {
+        const fetchStory = async () => {
+            try {
+                const data = await getStoryById(storyid); // Ambil data story
+                setStoryData(data); // Isi state dengan data dari backend
+                setTags(data.tags);
+            } catch (err) {
+                console.error(err);
+                setError("Failed to fetch story data.: ");
+            }
+        };
+
+        const fetchChapter = async () => {
+            try {
+                const data = await getChaptersByStoryId(storyid);
+                setChapterData(data);
+            } catch (err) {
+                console.error(err);
+                setError("Failed to fetch chapter data.: ");
+            }
+        }
+
+        fetchStory();
+        fetchChapter();
+    }, [storyid]);
+
+    // Tangani perubahan input form
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setStoryData({ ...storyData, [name]: value });
+    };
+
+    // Tambahkan Tag Baru
     const handleAddTag = (e) => {
         if (e.key === "Enter" || e.key === ",") {
             e.preventDefault();
-            if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-                setTags([...tags, tagInput.trim()]);
+            const newTag = tagInput.trim(); // Hilangkan spasi
+            if (newTag && !tags.includes(newTag)) {
+                setTags([...tags, newTag]); // Tambahkan tag baru ke state tags
             }
-            setTagInput("");
+            setTagInput(""); // Bersihkan input
         }
     };
 
-    // Handle removing tags
-    const handleRemoveTag = (tag) => {
-        setTags(tags.filter((t) => t !== tag));
+    // Tangani Perubahan Input untuk Tags
+    const handleTagInputChange = (e) => {
+        setTagInput(e.target.value); // Perbarui input untuk tag baru
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            // Gabungkan data yang akan dikirim
-            const dataToSubmit = {
-                ...storyData,
-                tags: tags, // Tambahkan tags dari state
-            };
+    // Hapus Tag
+    const handleRemoveTag = (tagToRemove) => {
+        setTags(tags.filter((tag) => tag !== tagToRemove)); // Hapus tag dari array
+    };
 
-            // Kirim data ke API
-            await addStory(dataToSubmit);
-            alert("Story and chapters saved successfully!");
-            navigate("/"); // Navigasi ke halaman lain setelah sukses
-        } catch (error) {
-            console.error("Error saving story:", error.message);
-            alert("Failed to save story and chapters");
+    // Simpan perubahan ke backend
+    const handleSave = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            const updatedStoryData = { ...storyData, tags };
+            await updateStory(storyid, updatedStoryData); // Kirim data yang diupdate ke backend
+            alert("Story updated successfully!");
+            navigate("/"); // Kembali ke halaman utama setelah sukses
+        } catch (err) {
+            console.error(err);
+            setError("Failed to update story.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -68,13 +114,14 @@ const AddStoryPage = () => {
 
                 {/* Page Title */}
                 <h1 className="page-title">Edit Stories</h1>
+                {error && <p className="error-message">{error}</p>}
 
                 {/* Back Button */}
                 <Link to="/">Back</Link>
 
                 {/* Content Box */}
                 <div className="content-box">
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSave}>
                         {/* Title and Writer Name */}
                         <div className="form-row">
                             <div className="form-group">
@@ -84,7 +131,7 @@ const AddStoryPage = () => {
                                     name="title"
                                     placeholder="Title"
                                     value={storyData.title}
-                                    onChange={(e) => setStoryData({ ...storyData, title: e.target.value })}
+                                    onChange={handleInputChange}
                                     required
                                 />
                             </div>
@@ -95,7 +142,7 @@ const AddStoryPage = () => {
                                     name="author"
                                     placeholder="Writer Name"
                                     value={storyData.author}
-                                    onChange={(e) => setStoryData({ ...storyData, author: e.target.value })}
+                                    onChange={handleInputChange}
                                     required
                                 />
                             </div>
@@ -104,12 +151,11 @@ const AddStoryPage = () => {
                         {/* Synopsis */}
                         <div className="form-group">
                             <label>Synopsis</label>
-                            {/* <textarea name="synopsis" placeholder="Synopsis" rows="4" required></textarea> */}
                             <textarea
                                 name="synopsis"
                                 placeholder="Synopsis"
                                 value={storyData.synopsis}
-                                onChange={e => setStoryData({ ...storyData, synopsis: e.target.value })}
+                                onChange={handleInputChange}
                                 required
                             ></textarea>
                         </div>
@@ -121,7 +167,7 @@ const AddStoryPage = () => {
                                 <select
                                     name="category"
                                     value={storyData.category}
-                                    onChange={e => setStoryData({ ...storyData, category: e.target.value })}
+                                    onChange={handleInputChange}
                                     required
                                 >
                                     <option value="">Select Category</option>
@@ -134,11 +180,7 @@ const AddStoryPage = () => {
                                 <label>Tags/Keywords</label>
                                 <div className="tags-input">
                                     {tags.map((tag, index) => (
-                                        <span
-                                            key={index}
-                                            className="tag"
-                                            onClick={() => handleRemoveTag(tag)}
-                                        >
+                                        <span key={index} className="tag" onClick={() => handleRemoveTag(tag)}>
                                             {tag} &times;
                                         </span>
                                     ))}
@@ -146,8 +188,8 @@ const AddStoryPage = () => {
                                         type="text"
                                         placeholder="Add a tag"
                                         value={tagInput}
-                                        onChange={(e) => setTagInput(e.target.value)}
-                                        onKeyDown={handleAddTag}
+                                        onChange={handleTagInputChange}
+                                        onKeyDown={handleAddTag} // Tangani event Enter atau koma
                                     />
                                 </div>
                             </div>
@@ -161,17 +203,23 @@ const AddStoryPage = () => {
                             </div>
                             <div className="form-group">
                                 <label>Status</label>
-                                <select
-                                name="status"
-                                required value={storyData.status}
-                                onChange={e => setStoryData({ ...storyData, status: e.target.value })
-
-                                }>
+                                <select name="status" required value={storyData.status} onChange={handleInputChange}>
                                     <option value="Draft">Draft</option>
                                     <option value="Publish">Publish</option>
                                 </select>
                             </div>
                         </div>
+
+                        {/* Chapter Section */}
+                        <div className="chapter-section">
+                            <div className="chapter-button-placement">
+                            <button type="button" className="add-chapter-button" onClick={() => navigate(`/stories/${storyid}/chapter`) }>
+                                + Add Chapter
+                            </button>
+                            </div>
+                        </div>
+
+                        <ChapterTable data={chapterData} storyId={storyid} />
 
                         {/* Buttons */}
                         <div className="button-group">
@@ -197,4 +245,4 @@ const AddStoryPage = () => {
     );
 };
 
-export default AddStoryPage;
+export default EditStoryPage;

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import '../styles/Header.css';
 import filter from '../assets/filter.png';
 
-const Header = ({ onSearch }) => {
+const Header = ({ onSearch, onOpenFilter }) => {
     const [searchText, setSearchText] = useState('');
 
     const handleSearchChange = (e) => {
@@ -22,10 +22,10 @@ const Header = ({ onSearch }) => {
                 className="search-box"
             />
             <div className="buttons-container">
-                <button className="filter-btn">
+                <button className="filter-btn" onClick={onOpenFilter}>
                     <img className="filter-img" src={filter} alt="filter" />
                 </button>
-                <Link to="/stories/add" className="add-story-btn">+ Add Story</Link>
+                <Link to="/stories" className="add-story-btn">+ Add Story</Link>
             </div>
         </div>
     );
