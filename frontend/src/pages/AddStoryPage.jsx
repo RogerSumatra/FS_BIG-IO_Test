@@ -128,7 +128,7 @@ const AddStoryPage = () => {
                                     onChange={e => setStoryData({ ...storyData, category: e.target.value })}
                                     required
                                 >
-                                    <option value="">Select Category</option>
+                                    <option value="" selected disabled hidden>Select Category</option>
                                     <option value="Financial">Financial</option>
                                     <option value="Technology">Technology</option>
                                     <option value="Health">Health</option>
@@ -167,11 +167,11 @@ const AddStoryPage = () => {
                                 <label>Status</label>
                                 <select
                                 name="status"
-                
                                 required value={storyData.status}
                                 onChange={e => setStoryData({ ...storyData, status: e.target.value })
 
                                 }>
+                                    <option value="" selected disabled hidden>Choose Status</option>
                                     <option value="Draft">Draft</option>
                                     <option value="Publish">Publish</option>
                                 </select>

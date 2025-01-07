@@ -25,9 +25,18 @@ const EditStoryPage = () => {
     });
 
     const [ chapterData, setChapterData ] = useState([])
-
     const [loading, setLoading] = useState(false); // Loading state untuk tombol save
     const [error, setError] = useState(null); // Untuk menampilkan error jika ada
+
+    const fetchChapter = async () => {
+        try {
+            const data = await getChaptersByStoryId(storyid);
+            setChapterData(data);
+        } catch (err) {
+            console.error(err);
+            setError("Failed to fetch chapter data.: ");
+        }
+    }
 
     // Ambil data story dari backend saat halaman dimuat
     useEffect(() => {
@@ -41,16 +50,6 @@ const EditStoryPage = () => {
                 setError("Failed to fetch story data.: ");
             }
         };
-
-        const fetchChapter = async () => {
-            try {
-                const data = await getChaptersByStoryId(storyid);
-                setChapterData(data);
-            } catch (err) {
-                console.error(err);
-                setError("Failed to fetch chapter data.: ");
-            }
-        }
 
         fetchStory();
         fetchChapter();
@@ -232,7 +231,7 @@ const EditStoryPage = () => {
                             </div>
                         </div>
 
-                        <ChapterTable data={chapterData} storyId={storyid} />
+                        <ChapterTable data={chapterData} storyId={storyid} onDeleteSuccess={fetchChapter} />
 
                         {/* Buttons */}
                         <div className="button-group">

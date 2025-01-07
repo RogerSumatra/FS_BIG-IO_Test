@@ -63,3 +63,9 @@ export const deleteStoryById = async (storyId) => {
   const response = await axios.delete(`${API_BASE_URL}/stories/${storyId}`);
   return response.data;
 };
+
+// Delete chapters
+export const deleteChapterById = async (chapterId) => {
+  const response = await axios.delete(`${API_BASE_URL}/chapter/${chapterId}`);
+  return response.data;
+};

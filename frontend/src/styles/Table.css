@@ -62,8 +62,8 @@
 }
 
 .edit-btn {
-    width: 8vh;
-    height: 4vh;
+    width: 9vh;
+    height: 4.5vh;
     background-color: #0096FF;
     color: white;
     border-radius: 4px;
@@ -75,8 +75,8 @@
 }
 
 .view-btn {
-    width: 8vh;
-    height: 4vh;
+    width: 9vh;
+    height: 4.5vh;
     background-color: #50C878;
     color: white;
     border-radius: 4px;
@@ -88,8 +88,8 @@
 }
 
 .delete-btn {
-    width: 8vh;
-    height: 4vh;
+    width: 9vh;
+    height: 4.5vh;
     background-color: #FF4433; 
     color: white;
     border-radius: 4px;

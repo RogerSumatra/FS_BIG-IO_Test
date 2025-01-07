@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { deleteStoryById } from '../api/api';
+import { deleteStoryById, getAllStories } from '../api/api';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import ContentBox from '../components/ContentBox';
@@ -17,11 +17,7 @@ const Homepage = () => {
     useEffect(() => {
         const fetchStories = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/stories');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch stories');
-                }
-                const result = await response.json();
+                const result = await getAllStories();
                 setData(result);
                 setFilteredData(result);
             } catch (err) {
@@ -58,13 +54,15 @@ const Homepage = () => {
     };
 
     const handleDelete = async (storyId) => {
-        try {
-            await deleteStoryById(storyId);
-            const updatedData = data.filter((item) => item.id !== storyId);
-            setData(updatedData);
-            setFilteredData(updatedData);
-        } catch (err) {
-            console.error('Failed to delete story:', err.message);
+        if(window.confirm("Are you sure you want to delete this story?")) {
+            try {
+                await deleteStoryById(storyId);
+                const updatedData = data.filter((item) => item.id !== storyId);
+                setData(updatedData);
+                setFilteredData(updatedData);
+            } catch (err) {
+                console.error('Failed to delete story:', err.message);
+            }
         }
     };
 

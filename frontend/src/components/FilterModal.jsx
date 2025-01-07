@@ -26,7 +26,7 @@ const FilterPopup = ({ onClose, onFilter }) => {
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                     >
-                        <option value="">Select Category</option>
+                        <option value="" selected disabled hidden >Select Category</option>
                         <option value="Financial">Financial</option>
                         <option value="Technology">Technology</option>
                         <option value="Health">Health</option>
@@ -39,7 +39,7 @@ const FilterPopup = ({ onClose, onFilter }) => {
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
                     >
-                        <option value="">Select Status</option>
+                        <option value="" selected disabled hidden >Select Status</option>
                         <option value="Publish">Publish</option>
                         <option value="Draft">Draft</option>
                     </select>
