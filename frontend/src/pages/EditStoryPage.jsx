@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import ChapterTable from "../components/ChapterTable";
-import "./../styles/EditStoryPage.css";
+import "../styles/EditStoryPage.css";
 
 // API functions
 import { getChaptersByStoryId, getStoryById, updateStory } from "../api/api";
@@ -103,7 +103,7 @@ const EditStoryPage = () => {
     };
 
     return (
-        <div className="add-story-page">
+        <div className="edit-story-page">
             <Sidebar />
             {/* Main Content */}
             <div className="main-content">
@@ -117,7 +117,7 @@ const EditStoryPage = () => {
                 {error && <p className="error-message">{error}</p>}
 
                 {/* Back Button */}
-                <Link to="/">Back</Link>
+                <Link to="/" className="back-button">Back</Link>
 
                 {/* Content Box */}
                 <div className="content-box">
@@ -129,6 +129,7 @@ const EditStoryPage = () => {
                                 <input
                                     type="text"
                                     name="title"
+                                    className="input-left"
                                     placeholder="Title"
                                     value={storyData.title}
                                     onChange={handleInputChange}
@@ -141,6 +142,7 @@ const EditStoryPage = () => {
                                     type="text"
                                     name="author"
                                     placeholder="Writer Name"
+                                    className="input-right"
                                     value={storyData.author}
                                     onChange={handleInputChange}
                                     required
@@ -154,6 +156,7 @@ const EditStoryPage = () => {
                             <textarea
                                 name="synopsis"
                                 placeholder="Synopsis"
+                                className="input-synopsis"
                                 value={storyData.synopsis}
                                 onChange={handleInputChange}
                                 required
@@ -167,6 +170,7 @@ const EditStoryPage = () => {
                                 <select
                                     name="category"
                                     value={storyData.category}
+                                    className="input-category"
                                     onChange={handleInputChange}
                                     required
                                 >
@@ -199,11 +203,20 @@ const EditStoryPage = () => {
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Cover Image</label>
-                                <input type="file" accept="image/*" />
+                                <input
+                                type="file"
+                                className="input-left"
+                                accept="image/*"
+                                />
                             </div>
                             <div className="form-group">
                                 <label>Status</label>
-                                <select name="status" required value={storyData.status} onChange={handleInputChange}>
+                                <select
+                                name="status"
+                                value={storyData.status}
+                                onChange={handleInputChange}
+                                required
+                                >
                                     <option value="Draft">Draft</option>
                                     <option value="Publish">Publish</option>
                                 </select>

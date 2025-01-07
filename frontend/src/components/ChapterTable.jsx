@@ -1,4 +1,4 @@
-import '../styles/ChapterTable.css';
+import "../styles/ChapterTable.css";
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,7 +20,9 @@ const ChapterTable = ({ data, storyId, isViewOnly = false }) => {
                         <td>{moment(item.updatedAt).format('DD MMMM YYYY')}</td>
                         <td>
                             {isViewOnly ? (
-                                <button onClick={() => navigate(`/stories/${storyId}/chapters/${item.id}/view`)}>
+                                <button
+                                onClick={() => navigate(`/stories/${storyId}/chapters/${item.id}/view`)}
+                                className='view-btn'>
                                     View
                                 </button>
                             ) : (
@@ -30,6 +32,7 @@ const ChapterTable = ({ data, storyId, isViewOnly = false }) => {
                                         e.preventDefault();
                                         navigate(`/stories/${storyId}/chapters/${item.id}/edit`);
                                     }}
+                                    className='edit-btn'
                                 >
                                     Edit
                                 </button>

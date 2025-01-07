@@ -21,7 +21,7 @@
 
 .add-story-btn {
     padding: 10px 20px;
-    background-color: #ff6600;
+    background-color: #FF9800;
     color: white;
     border: none;
     border-radius: 20px;
@@ -30,7 +30,11 @@
     text-decoration: none;
 }
 
-.filter-btn {
+.add-story-btn:hover {
+    background-color: #FF7518;
+}
+
+.filter-toggle {
     background-color: white;
     border-radius: 100%;
     border: none;

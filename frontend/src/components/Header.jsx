@@ -22,7 +22,7 @@ const Header = ({ onSearch, onOpenFilter }) => {
                 className="search-box"
             />
             <div className="buttons-container">
-                <button className="filter-btn" onClick={onOpenFilter}>
+                <button className="filter-toggle" onClick={onOpenFilter}>
                     <img className="filter-img" src={filter} alt="filter" />
                 </button>
                 <Link to="/stories" className="add-story-btn">+ Add Story</Link>

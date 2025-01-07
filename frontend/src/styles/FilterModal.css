@@ -80,6 +80,8 @@ select {
 }
 
 .filter-btn {
-    background-color: #ff6600;
-    color: white;
+    background: #FF9800;
+    color: #fff;
+    border: none;
 }
+

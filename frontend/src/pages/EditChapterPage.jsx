@@ -65,7 +65,7 @@ const EditChapterPage = () => {
       <div className="main-content">
         {/* Breadcrumb */}
         <p className="breadcrumb">
-          Stories Management &gt; Edit Stories &gt; Edit Chapter
+          Stories Management &gt; Edit Stories &gt; <span className="ganti"> Edit Chapter </span>
         </p>
 
         {/* Page Title */}

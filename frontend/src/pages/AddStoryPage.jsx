@@ -63,11 +63,11 @@ const AddStoryPage = () => {
             <div className="main-content">
                 {/* Breadcrumb */}
                 <p className="breadcrumb">
-                    Stories Management &gt; Edit Stories
+                    Stories Management &gt; Add Stories
                 </p>
 
                 {/* Page Title */}
-                <h1 className="page-title">Edit Stories</h1>
+                <h1 className="page-title">Add Stories</h1>
 
                 {/* Back Button */}
                 <Link to="/">Back</Link>
