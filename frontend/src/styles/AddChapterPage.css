@@ -2,10 +2,10 @@
     display: flex;
 }
 
-.main-content {
+.add-chapter-page .main-content {
     flex: 1;
     padding: 24px;
-    background-color: #f9f9f9;
+    background-color: white;
 }
 
 .breadcrumb {
@@ -45,10 +45,11 @@
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 8px;
+    font-family: sans-serif;
 }
 
-.form-group input {
-    width: 100%;
+.form-group .input-title {
+    width: 97%;
     padding: 8px;
     font-size: 14px;
     border: 1px solid #e0e0e0;

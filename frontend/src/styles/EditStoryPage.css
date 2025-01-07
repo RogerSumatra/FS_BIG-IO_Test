@@ -4,9 +4,10 @@
 }
 
 /* Main Content */
-.main-content {
+.edit-story-page .main-content {
     flex: 1;
     margin-right: 20px;
+    background-color: white;
 }
 
 .breadcrumb {
@@ -64,6 +65,7 @@
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    font-family: sans-serif;
 }
 
 .form-group .input-right{
@@ -124,7 +126,7 @@
     justify-content: flex-end;
 }
 
-.add-chapter-button {
+.edit-story-page .add-chapter-button {
     padding: 10px 20px;
     background: #FF9800;
     color: #fff;
@@ -132,6 +134,7 @@
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
+
     
 }
 
@@ -146,6 +149,7 @@
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    font-family: sans-serif;
 }
 
 /* Buttons */

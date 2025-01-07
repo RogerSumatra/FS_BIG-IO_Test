@@ -73,7 +73,7 @@ const EditChapterPage = () => {
 
         {/* Back Button */}
         <button className="back-button" onClick={() => navigate(-1)}>
-          &lt; Back
+          Back
         </button>
 
         {/* Content Box */}

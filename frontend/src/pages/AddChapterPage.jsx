@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { addChapter } from "../api/api";
 import Sidebar from "../components/Sidebar";
 import ToolbarEditor from "../components/ToolbarEditor";
-import "./../styles/AddChapterPage.css";
+import "../styles/AddChapterPage.css";
 
 const AddChapterPage = () => {
     const navigate = useNavigate();
@@ -56,7 +56,7 @@ const AddChapterPage = () => {
 
                 {/* Back Button */}
                 <button className="back-button" onClick={() => navigate(-1)}>
-                    &lt; Back
+                    Back
                 </button>
 
                 {/* Content Box */}
@@ -68,6 +68,7 @@ const AddChapterPage = () => {
                             <input
                                 type="text"
                                 placeholder="Title"
+                                className="input-title"
                                 value={chapterTitle}
                                 onChange={(e) => setChapterTitle(e.target.value)}
                                 required
