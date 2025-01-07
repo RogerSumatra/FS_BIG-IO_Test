@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import '../styles/ContentBox.css';
 
 const ContentBox = ({ children }) => {

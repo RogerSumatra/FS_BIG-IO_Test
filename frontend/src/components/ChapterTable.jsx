@@ -23,9 +23,9 @@ const ChapterTable = ({ data, storyId, isViewOnly = false, onDeleteSuccess }) =>
     const handleDeleteChapter = async (chapterId) => {
         if (window.confirm("Are you sure you want to delete this chapter?")) {
             try {
-                await deleteChapterById(chapterId); // Panggil API delete
+                await deleteChapterById(chapterId);
                 alert('Chapter deleted successfully!');
-                onDeleteSuccess(); // Refresh data setelah delete
+                onDeleteSuccess();
             } catch (error) {
                 console.error(error);
                 alert('Failed to delete chapter.');

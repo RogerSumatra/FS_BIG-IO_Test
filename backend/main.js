@@ -13,11 +13,11 @@ sequelize.authenticate()
     .then(() => console.log('Connected to Database'))
     .catch(err => console.log('Unable to connect: ', err));
 
-sequelize.sync({alter: true})
+sequelize.sync({ alter: true })
     .then(() => console.log('Database synced'))
     .catch((err) => console.log('Unable to synced: ', err));
 
-app.get('/api/stories', async(req, res) => {
+app.get('/api/stories', async (req, res) => {
     try {
         const stories = await Story.findAll();
         res.status(200).json(stories.map(story => ({
@@ -95,7 +95,6 @@ app.delete('/api/stories/:storyid', async (req, res) => {
             return res.status(404).json({ error: 'Story not found' });
         }
 
-        // Hapus story, otomatis akan menghapus chapter terkait jika cascading diatur
         await story.destroy();
 
         res.json({ message: 'Story and related chapters deleted successfully' });
@@ -105,31 +104,29 @@ app.delete('/api/stories/:storyid', async (req, res) => {
     }
 });
 
-//-----------------------------------------------------------------------------------------------------------//
-
 app.get('/api/stories/:storyid/chapter', async (req, res) => {
     try {
         const storyId = req.params.storyid;
 
         const chapter = await Chapter.findAll({
-            where: {storyId}
+            where: { storyId }
         });
 
         res.status(200).json(chapter);
     } catch (error) {
-        res.status(500).json({error: error.message});
+        res.status(500).json({ error: error.message });
     }
 });
 
-app.get('/api/chapter/:chapterid', async(req, res) => {
+app.get('/api/chapter/:chapterid', async (req, res) => {
     try {
         const chapter = await Chapter.findByPk(req.params.chapterid);
-        if(!chapter) {
-            return res.status(404).json({error: 'Chapter not found'});
+        if (!chapter) {
+            return res.status(404).json({ error: 'Chapter not found' });
         }
         res.status(200).json(chapter)
     } catch (error) {
-        res.status(500).json({error: error.message});
+        res.status(500).json({ error: error.message });
     }
 });
 
@@ -144,9 +141,9 @@ app.post('/api/stories/:storyid/chapter', async (req, res) => {
             chapterContent: chapterContent,
         });
 
-        res.status(201).json({chapter})
+        res.status(201).json({ chapter })
     } catch (error) {
-        res.status(500).json({error: error.message})
+        res.status(500).json({ error: error.message })
     }
 });
 

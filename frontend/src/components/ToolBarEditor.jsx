@@ -1,19 +1,19 @@
 import React from "react";
-import ReactQuill from "react-quill"; // Import Quill
-import "react-quill/dist/quill.snow.css"; // Quill default styles
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const ToolBarEditor = ({ value, onChange, readOnly = false }) => {
     const modules = {
         toolbar: !readOnly
             ? [
-                  [{ header: [1, 2, 3, false] }],
-                  ["bold", "italic", "underline", "strike"],
-                  [{ list: "ordered" }, { list: "bullet" }],
-                  ["link", "image"],
-                  [{ align: [] }],
-                  ["clean"],
-              ]
-            : false, // Disable toolbar when in read-only mode
+                [{ header: [1, 2, 3, false] }],
+                ["bold", "italic", "underline", "strike"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                ["link", "image"],
+                [{ align: [] }],
+                ["clean"],
+            ]
+            : false,
     };
 
     const formats = [
@@ -34,10 +34,10 @@ const ToolBarEditor = ({ value, onChange, readOnly = false }) => {
             <ReactQuill
                 theme="snow"
                 value={value}
-                onChange={!readOnly ? onChange : undefined} // Disable onChange when readOnly
+                onChange={!readOnly ? onChange : undefined}
                 modules={modules}
                 formats={formats}
-                readOnly={readOnly} // Set readOnly mode
+                readOnly={readOnly}
             />
         </div>
     );

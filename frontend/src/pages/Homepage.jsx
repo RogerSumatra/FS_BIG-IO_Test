@@ -54,7 +54,7 @@ const Homepage = () => {
     };
 
     const handleDelete = async (storyId) => {
-        if(window.confirm("Are you sure you want to delete this story?")) {
+        if (window.confirm("Are you sure you want to delete this story?")) {
             try {
                 await deleteStoryById(storyId);
                 const updatedData = data.filter((item) => item.id !== storyId);

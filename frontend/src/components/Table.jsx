@@ -57,9 +57,9 @@ const Table = ({ data, onDelete }) => {
                             </span>
                         </td>
                         <td>
-                            <Ellipsis 
-                                onClick={() => handleEllipsisClick(index)} 
-                                className="ellipsis-icon" 
+                            <Ellipsis
+                                onClick={() => handleEllipsisClick(index)}
+                                className="ellipsis-icon"
                             />
                             {activeRow === index && (
                                 <div className="menu-buttons">

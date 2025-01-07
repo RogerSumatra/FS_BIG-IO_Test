@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import ChapterTable from "../components/ChapterTable";
 import "../styles/EditStoryPage.css";
-
-// API functions
 import { getChaptersByStoryId, getStoryById, updateStory } from "../api/api";
 
 const EditStoryPage = () => {
@@ -14,7 +12,6 @@ const EditStoryPage = () => {
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState("");
 
-    // State untuk data story
     const [storyData, setStoryData] = useState({
         title: "",
         author: "",
@@ -24,9 +21,9 @@ const EditStoryPage = () => {
         status: "",
     });
 
-    const [ chapterData, setChapterData ] = useState([])
-    const [loading, setLoading] = useState(false); // Loading state untuk tombol save
-    const [error, setError] = useState(null); // Untuk menampilkan error jika ada
+    const [chapterData, setChapterData] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const fetchChapter = async () => {
         try {
@@ -38,12 +35,11 @@ const EditStoryPage = () => {
         }
     }
 
-    // Ambil data story dari backend saat halaman dimuat
     useEffect(() => {
         const fetchStory = async () => {
             try {
-                const data = await getStoryById(storyid); // Ambil data story
-                setStoryData(data); // Isi state dengan data dari backend
+                const data = await getStoryById(storyid);
+                setStoryData(data);
                 setTags(data.tags);
             } catch (err) {
                 console.error(err);
@@ -55,44 +51,39 @@ const EditStoryPage = () => {
         fetchChapter();
     }, [storyid]);
 
-    // Tangani perubahan input form
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setStoryData({ ...storyData, [name]: value });
     };
 
-    // Tambahkan Tag Baru
     const handleAddTag = (e) => {
         if (e.key === "Enter" || e.key === ",") {
             e.preventDefault();
-            const newTag = tagInput.trim(); // Hilangkan spasi
+            const newTag = tagInput.trim();
             if (newTag && !tags.includes(newTag)) {
-                setTags([...tags, newTag]); // Tambahkan tag baru ke state tags
+                setTags([...tags, newTag]);
             }
-            setTagInput(""); // Bersihkan input
+            setTagInput("");
         }
     };
 
-    // Tangani Perubahan Input untuk Tags
     const handleTagInputChange = (e) => {
-        setTagInput(e.target.value); // Perbarui input untuk tag baru
+        setTagInput(e.target.value);
     };
 
-    // Hapus Tag
     const handleRemoveTag = (tagToRemove) => {
-        setTags(tags.filter((tag) => tag !== tagToRemove)); // Hapus tag dari array
+        setTags(tags.filter((tag) => tag !== tagToRemove));
     };
 
-    // Simpan perubahan ke backend
     const handleSave = async (e) => {
         e.preventDefault();
         setLoading(true);
 
         try {
             const updatedStoryData = { ...storyData, tags };
-            await updateStory(storyid, updatedStoryData); // Kirim data yang diupdate ke backend
+            await updateStory(storyid, updatedStoryData);
             alert("Story updated successfully!");
-            navigate("/"); // Kembali ke halaman utama setelah sukses
+            navigate("/");
         } catch (err) {
             console.error(err);
             setError("Failed to update story.");
@@ -104,24 +95,15 @@ const EditStoryPage = () => {
     return (
         <div className="edit-story-page">
             <Sidebar />
-            {/* Main Content */}
             <div className="main-content">
-                {/* Breadcrumb */}
                 <p className="breadcrumb">
                     Stories Management &gt; Edit Stories
                 </p>
-
-                {/* Page Title */}
                 <h1 className="page-title">Edit Stories</h1>
                 {error && <p className="error-message">{error}</p>}
-
-                {/* Back Button */}
                 <Link to="/" className="back-button">Back</Link>
-
-                {/* Content Box */}
                 <div className="content-box">
                     <form onSubmit={handleSave}>
-                        {/* Title and Writer Name */}
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Title</label>
@@ -148,8 +130,6 @@ const EditStoryPage = () => {
                                 />
                             </div>
                         </div>
-
-                        {/* Synopsis */}
                         <div className="form-group">
                             <label>Synopsis</label>
                             <textarea
@@ -161,8 +141,6 @@ const EditStoryPage = () => {
                                 required
                             ></textarea>
                         </div>
-
-                        {/* Category and Tags */}
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Category</label>
@@ -192,48 +170,41 @@ const EditStoryPage = () => {
                                         placeholder="Add a tag"
                                         value={tagInput}
                                         onChange={handleTagInputChange}
-                                        onKeyDown={handleAddTag} // Tangani event Enter atau koma
+                                        onKeyDown={handleAddTag}
                                     />
                                 </div>
                             </div>
                         </div>
-
-                        {/* Cover Image and Status */}
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Cover Image</label>
                                 <input
-                                type="file"
-                                className="input-left"
-                                accept="image/*"
+                                    type="file"
+                                    className="input-left"
+                                    accept="image/*"
                                 />
                             </div>
                             <div className="form-group">
                                 <label>Status</label>
                                 <select
-                                name="status"
-                                value={storyData.status}
-                                onChange={handleInputChange}
-                                required
+                                    name="status"
+                                    value={storyData.status}
+                                    onChange={handleInputChange}
+                                    required
                                 >
                                     <option value="Draft">Draft</option>
                                     <option value="Publish">Publish</option>
                                 </select>
                             </div>
                         </div>
-
-                        {/* Chapter Section */}
                         <div className="chapter-section">
                             <div className="chapter-button-placement">
-                            <button type="button" className="add-chapter-button" onClick={() => navigate(`/stories/${storyid}/chapter`) }>
-                                + Add Chapter
-                            </button>
+                                <button type="button" className="add-chapter-button" onClick={() => navigate(`/stories/${storyid}/chapter`)}>
+                                    + Add Chapter
+                                </button>
                             </div>
                         </div>
-
                         <ChapterTable data={chapterData} storyId={storyid} onDeleteSuccess={fetchChapter} />
-
-                        {/* Buttons */}
                         <div className="button-group">
                             <button
                                 type="button"

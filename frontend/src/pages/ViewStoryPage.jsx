@@ -4,14 +4,12 @@ import Sidebar from "../components/Sidebar";
 import ChapterTable from "../components/ChapterTable";
 import "./../styles/ViewStoryPage.css";
 
-// API functions
 import { getChaptersByStoryId, getStoryById } from "../api/api";
 
 const ViewStoryPage = () => {
     const { storyid } = useParams();
     const navigate = useNavigate();
 
-    // State untuk data story
     const [storyData, setStoryData] = useState({
         title: "",
         author: "",
@@ -22,14 +20,13 @@ const ViewStoryPage = () => {
     });
 
     const [chapterData, setChapterData] = useState([]);
-    const [error, setError] = useState(null); // Untuk menampilkan error jika ada
+    const [error, setError] = useState(null);
 
-    // Ambil data story dan chapters dari backend saat halaman dimuat
     useEffect(() => {
         const fetchStory = async () => {
             try {
-                const data = await getStoryById(storyid); // Ambil data story
-                setStoryData(data); // Isi state dengan data dari backend
+                const data = await getStoryById(storyid);
+                setStoryData(data);
             } catch (err) {
                 console.error(err);
                 setError("Failed to fetch story data.");
@@ -38,7 +35,7 @@ const ViewStoryPage = () => {
 
         const fetchChapters = async () => {
             try {
-                const data = await getChaptersByStoryId(storyid); // Ambil data chapters
+                const data = await getChaptersByStoryId(storyid);
                 setChapterData(data);
             } catch (err) {
                 console.error(err);
@@ -53,23 +50,14 @@ const ViewStoryPage = () => {
     return (
         <div className="view-story-page">
             <Sidebar />
-            {/* Main Content */}
             <div className="main-content">
-                {/* Breadcrumb */}
                 <p className="breadcrumb">Stories Management &gt; View Story</p>
-
-                {/* Page Title */}
                 <h1 className="page-title">View Story</h1>
                 {error && <p className="error-message">{error}</p>}
-
-                {/* Back Button */}
                 <button className="back-button" onClick={() => navigate(-1)}>
                     Back
                 </button>
-
-                {/* Content Box */}
                 <div className="content-box">
-                    {/* Title and Writer Name */}
                     <div className="form-row">
                         <div className="form-group">
                             <label>Title</label>
@@ -79,7 +67,7 @@ const ViewStoryPage = () => {
                                 name="title"
                                 placeholder="Title"
                                 value={storyData.title}
-                                readOnly // Input hanya untuk melihat
+                                readOnly
                             />
                         </div>
                         <div className="form-group">
@@ -90,12 +78,10 @@ const ViewStoryPage = () => {
                                 className="input-right"
                                 placeholder="Writer Name"
                                 value={storyData.author}
-                                readOnly // Input hanya untuk melihat
+                                readOnly
                             />
                         </div>
                     </div>
-
-                    {/* Synopsis */}
                     <div className="form-group">
                         <label>Synopsis</label>
                         <textarea
@@ -103,11 +89,9 @@ const ViewStoryPage = () => {
                             placeholder="Synopsis"
                             className="input-synopsis"
                             value={storyData.synopsis}
-                            readOnly // Textarea hanya untuk melihat
+                            readOnly
                         ></textarea>
                     </div>
-
-                    {/* Category and Tags */}
                     <div className="form-row">
                         <div className="form-group">
                             <label>Category</label>
@@ -134,12 +118,9 @@ const ViewStoryPage = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* Cover Image and Status */}
                     <div className="form-row">
                         <div className="form-group">
                             <label>Cover Image</label>
-                            {/* Simpan URL atau preview gambar jika ada */}
                             <input
                                 type="text"
                                 placeholder="Cover Image URL"
@@ -156,13 +137,11 @@ const ViewStoryPage = () => {
                             </select>
                         </div>
                     </div>
-
-                    {/* Chapter Section */}
                     <div className="chapter-section">
                         <ChapterTable
                             data={chapterData}
                             storyId={storyid}
-                            isViewOnly={true} 
+                            isViewOnly={true}
                         />
                     </div>
                 </div>

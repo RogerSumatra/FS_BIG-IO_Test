@@ -8,28 +8,23 @@ import "../styles/AddChapterPage.css";
 const AddChapterPage = () => {
     const navigate = useNavigate();
     const { storyid } = useParams();
-
-    // State untuk form
     const [chapterTitle, setChapterTitle] = useState("");
     const [chapterContent, setChapterContent] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
 
         try {
-            // Kirim data ke backend
             const chapterData = {
                 chapterTitle,
                 chapterContent: chapterContent,
             };
             await addChapter(storyid, chapterData);
 
-            // Navigasi kembali setelah berhasil
             navigate(-1);
         } catch (err) {
             console.error(err);
@@ -41,28 +36,17 @@ const AddChapterPage = () => {
 
     return (
         <div className="add-chapter-page">
-            {/* Sidebar */}
             <Sidebar />
-
-            {/* Main Content */}
             <div className="main-content">
-                {/* Breadcrumb */}
                 <p className="breadcrumb">
                     Stories Management &gt; Add Stories &gt; Add Chapter
                 </p>
-
-                {/* Page Title */}
                 <h1 className="page-title">Add Chapter</h1>
-
-                {/* Back Button */}
                 <button className="back-button" onClick={() => navigate(-1)}>
                     Back
                 </button>
-
-                {/* Content Box */}
                 <div className="content-box">
                     <form onSubmit={handleSubmit}>
-                        {/* Chapter Title */}
                         <div className="form-group">
                             <label>Title</label>
                             <input
@@ -74,8 +58,6 @@ const AddChapterPage = () => {
                                 required
                             />
                         </div>
-
-                        {/* Story Editor */}
                         <div className="form-group">
                             <label>Story</label>
                             <ToolbarEditor
@@ -83,11 +65,7 @@ const AddChapterPage = () => {
                                 onChange={setChapterContent}
                             />
                         </div>
-
-                        {/* Error Message */}
                         {error && <p className="error-message">{error}</p>}
-
-                        {/* Buttons */}
                         <div className="button-group">
                             <button
                                 type="button"

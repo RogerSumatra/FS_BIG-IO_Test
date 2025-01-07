@@ -1,9 +1,7 @@
-/* Page Layout */
 .edit-story-page {
     display: flex;
 }
 
-/* Main Content */
 .edit-story-page .main-content {
     flex: 1;
     margin-right: 20px;
@@ -36,7 +34,7 @@
 }
 
 .back-button::before {
-    content: '\2190'; /* Unicode untuk panah kiri */
+    content: '\2190';
     margin-right: 8px;
 }
 
@@ -44,7 +42,6 @@
     background-color: #e0e0e0;
 }
 
-/* Content Box */
 .content-box {
     padding: 20px;
     background: #f9f9f9;
@@ -68,28 +65,28 @@
     font-family: sans-serif;
 }
 
-.form-group .input-right{
+.form-group .input-right {
     width: 95%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-.form-group .input-synopsis{
+.form-group .input-synopsis {
     width: 98%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-.form-group .input-category{
+.form-group .input-category {
     width: 95%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-.form-group .input-left{
+.form-group .input-left {
     width: 90%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -110,7 +107,6 @@
     border-radius: 5px;
 }
 
-/* Tags Input */
 .tags-input {
     display: flex;
     flex-wrap: wrap;
@@ -120,7 +116,6 @@
     border-radius: 5px;
 }
 
-/* Chapter */
 .chapter-button-placement {
     display: flex;
     justify-content: flex-end;
@@ -134,14 +129,11 @@
     border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
-
-    
 }
 
 .add-chapter-button:hover {
     background-color: #FF7518;
 }
-
 
 .tag {
     background: #FF9800;
@@ -152,7 +144,6 @@
     font-family: sans-serif;
 }
 
-/* Buttons */
 .button-group {
     display: flex;
     justify-content: flex-end;

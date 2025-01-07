@@ -10,7 +10,6 @@ const AddStoryPage = () => {
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState("");
 
-    // State untuk story
     const [title, setTitle] = useState("");
     const [storyData, setStoryData] = useState({
         title: "",
@@ -21,7 +20,6 @@ const AddStoryPage = () => {
         status: "",
     });
 
-    // Handle adding tags
     const handleAddTag = (e) => {
         if (e.key === "Enter" || e.key === ",") {
             e.preventDefault();
@@ -32,7 +30,6 @@ const AddStoryPage = () => {
         }
     };
 
-    // Handle removing tags
     const handleRemoveTag = (tag) => {
         setTags(tags.filter((t) => t !== tag));
     };
@@ -40,16 +37,13 @@ const AddStoryPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Gabungkan data yang akan dikirim
             const dataToSubmit = {
                 ...storyData,
-                tags: tags, // Tambahkan tags dari state
+                tags: tags,
             };
-
-            // Kirim data ke API
             await addStory(dataToSubmit);
             alert("Story and chapters saved successfully!");
-            navigate("/"); // Navigasi ke halaman lain setelah sukses
+            navigate("/");
         } catch (error) {
             console.error("Error saving story:", error.message);
             alert("Failed to save story and chapters");
@@ -59,23 +53,14 @@ const AddStoryPage = () => {
     return (
         <div className="add-story-page">
             <Sidebar />
-            {/* Main Content */}
             <div className="main-content">
-                {/* Breadcrumb */}
                 <p className="breadcrumb">
                     Stories Management &gt; Add Stories
                 </p>
-
-                {/* Page Title */}
                 <h1 className="page-title">Add Stories</h1>
-
-                {/* Back Button */}
                 <Link to="/" className="back-button">Back</Link>
-
-                {/* Content Box */}
                 <div className="content-box">
                     <form onSubmit={handleSubmit}>
-                        {/* Title and Writer Name */}
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Title</label>
@@ -102,11 +87,8 @@ const AddStoryPage = () => {
                                 />
                             </div>
                         </div>
-
-                        {/* Synopsis */}
                         <div className="form-group">
                             <label>Synopsis</label>
-                            {/* <textarea name="synopsis" placeholder="Synopsis" rows="4" required></textarea> */}
                             <textarea
                                 name="synopsis"
                                 placeholder="Synopsis"
@@ -116,8 +98,6 @@ const AddStoryPage = () => {
                                 required
                             ></textarea>
                         </div>
-
-                        {/* Category and Tags */}
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Category</label>
@@ -156,8 +136,6 @@ const AddStoryPage = () => {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Cover Image and Status */}
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Cover Image</label>
@@ -166,19 +144,17 @@ const AddStoryPage = () => {
                             <div className="form-group">
                                 <label>Status</label>
                                 <select
-                                name="status"
-                                required value={storyData.status}
-                                onChange={e => setStoryData({ ...storyData, status: e.target.value })
+                                    name="status"
+                                    required value={storyData.status}
+                                    onChange={e => setStoryData({ ...storyData, status: e.target.value })
 
-                                }>
+                                    }>
                                     <option value="" selected disabled hidden>Choose Status</option>
                                     <option value="Draft">Draft</option>
                                     <option value="Publish">Publish</option>
                                 </select>
                             </div>
                         </div>
-
-                        {/* Buttons */}
                         <div className="button-group">
                             <button
                                 type="button"

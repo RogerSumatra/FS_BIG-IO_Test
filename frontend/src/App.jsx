@@ -11,18 +11,18 @@ import ViewChapterPage from "./pages/ViewChapterPage";
 
 const App = () => {
     return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/stories" element={<AddStoryPage />} />
-          <Route path="/stories/:storyid/chapter" element={<AddChapterPage/>} />
-          <Route path="/stories/:storyid/edit" element={<EditStoryPage />} />
-          <Route path="/stories/:storyid/view" element={<ViewStoryPage />} />
-          <Route path="/stories/:storyId/chapters/:chapterid/edit" element={<EditChapterPage />} />
-          <Route path="/stories/:storyId/chapters/:chapterid/view" element={<ViewChapterPage />} />
-        </Routes>
-      </Router>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/stories" element={<AddStoryPage />} />
+                <Route path="/stories/:storyid/chapter" element={<AddChapterPage />} />
+                <Route path="/stories/:storyid/edit" element={<EditStoryPage />} />
+                <Route path="/stories/:storyid/view" element={<ViewStoryPage />} />
+                <Route path="/stories/:storyId/chapters/:chapterid/edit" element={<EditChapterPage />} />
+                <Route path="/stories/:storyId/chapters/:chapterid/view" element={<ViewChapterPage />} />
+            </Routes>
+        </Router>
     );
-  };
+};
 
 export default App;
