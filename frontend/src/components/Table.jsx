@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Ellipsis } from 'lucide-react';
 import '../styles/Table.css';
 
-const Table = ({ data }) => {
+const Table = ({ data, onDelete }) => {
     const navigate = useNavigate();
     const [activeRow, setActiveRow] = useState(null);
 
@@ -12,7 +12,6 @@ const Table = ({ data }) => {
     };
 
     const handleClickOutside = (event) => {
-        // Pastikan klik terjadi di luar menu-buttons
         if (!event.target.closest('.menu-buttons') && !event.target.closest('.ellipsis-icon')) {
             setActiveRow(null);
         }
@@ -69,6 +68,9 @@ const Table = ({ data }) => {
                                     </button>
                                     <button onClick={() => navigate(`/stories/${item.id}/view`)} className="view-btn">
                                         View
+                                    </button>
+                                    <button onClick={() => onDelete(item.id)} className="delete-btn">
+                                        Delete
                                     </button>
                                 </div>
                             )}

@@ -1,4 +1,3 @@
-// frontend/src/api/api.js
 import axios from "axios";
 
 const API_BASE_URL = "http://localhost:5000/api";
@@ -59,3 +58,8 @@ export const updateChapter = async (chapterId, chapterData) => {
   return response.data;
 };
 
+// Delete story and related chapters
+export const deleteStoryById = async (storyId) => {
+  const response = await axios.delete(`${API_BASE_URL}/stories/${storyId}`);
+  return response.data;
+};

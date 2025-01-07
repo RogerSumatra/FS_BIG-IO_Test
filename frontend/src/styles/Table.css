@@ -86,3 +86,16 @@
 .view-btn:hover {
     background-color: #228B22;
 }
+
+.delete-btn {
+    width: 8vh;
+    height: 4vh;
+    background-color: #FF4433; 
+    color: white;
+    border-radius: 4px;
+    border: none;
+}
+
+.delete-btn:hover {
+    background-color: #C41E3A;
+}

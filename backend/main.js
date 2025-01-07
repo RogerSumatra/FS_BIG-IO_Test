@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/database');
-const Story = require("./models/Story");
-const Chapter = require("./models/Chapter");
+const { Story, Chapter } = require('./models/relation');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -89,13 +88,19 @@ app.put('/api/stories/:storyid', async (req, res) => {
 
 app.delete('/api/stories/:storyid', async (req, res) => {
     try {
-        const story = await Story.findByPk(req.params.storyid);
+        const storyId = req.params.storyid;
+
+        const story = await Story.findByPk(storyId);
         if (!story) {
             return res.status(404).json({ error: 'Story not found' });
         }
+
+        // Hapus story, otomatis akan menghapus chapter terkait jika cascading diatur
         await story.destroy();
-        res.json({ message: 'Story deleted successfully' });
+
+        res.json({ message: 'Story and related chapters deleted successfully' });
     } catch (error) {
+        console.error("Error deleting story:", error.message);
         res.status(500).json({ error: error.message });
     }
 });

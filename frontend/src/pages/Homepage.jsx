@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { deleteStoryById } from '../api/api';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import ContentBox from '../components/ContentBox';
@@ -56,6 +57,17 @@ const Homepage = () => {
         setFilteredData(filtered);
     };
 
+    const handleDelete = async (storyId) => {
+        try {
+            await deleteStoryById(storyId);
+            const updatedData = data.filter((item) => item.id !== storyId);
+            setData(updatedData);
+            setFilteredData(updatedData);
+        } catch (err) {
+            console.error('Failed to delete story:', err.message);
+        }
+    };
+
     return (
         <div className="homepage">
             <Sidebar />
@@ -68,7 +80,7 @@ const Homepage = () => {
                     ) : error ? (
                         <p style={{ color: 'red' }}>{error}</p>
                     ) : (
-                        <Table data={filteredData} />
+                        <Table data={filteredData} onDelete={handleDelete} />
                     )}
                 </ContentBox>
             </div>
