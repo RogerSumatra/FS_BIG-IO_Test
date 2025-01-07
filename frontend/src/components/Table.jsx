@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Ellipsis } from 'lucide-react';
 import '../styles/Table.css';
@@ -10,6 +10,20 @@ const Table = ({ data }) => {
     const handleEllipsisClick = (index) => {
         setActiveRow(activeRow === index ? null : index);
     };
+
+    const handleClickOutside = (event) => {
+        // Pastikan klik terjadi di luar menu-buttons
+        if (!event.target.closest('.menu-buttons') && !event.target.closest('.ellipsis-icon')) {
+            setActiveRow(null);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     return (
         <table className="story-table">
@@ -44,7 +58,10 @@ const Table = ({ data }) => {
                             </span>
                         </td>
                         <td>
-                            <Ellipsis onClick={() => handleEllipsisClick(index)} />
+                            <Ellipsis 
+                                onClick={() => handleEllipsisClick(index)} 
+                                className="ellipsis-icon" 
+                            />
                             {activeRow === index && (
                                 <div className="menu-buttons">
                                     <button onClick={() => navigate(`/stories/${item.id}/edit`)} className="edit-btn">

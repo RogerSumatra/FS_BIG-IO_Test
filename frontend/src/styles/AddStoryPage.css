@@ -18,13 +18,27 @@
     margin: 10px 0;
 }
 
-.back-button {
-    margin-bottom: 20px;
-    padding: 10px 20px;
-    background: transparent;
+.main-content .back-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-decoration: none;
+    background-color: #f1f1f1;
+    border-radius: 20px;
+    color: #333;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
+}
+
+.back-button::before {
+    content: '\2190'; /* Unicode untuk panah kiri */
+    margin-right: 8px;
+}
+
+.back-button:hover {
+    background-color: #e0e0e0;
 }
 
 /* Content Box */

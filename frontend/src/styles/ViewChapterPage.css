@@ -1,11 +1,11 @@
-.add-chapter-page {
+.view-chapter-page {
     display: flex;
 }
 
-.main-content {
+.view-chapter-page .main-content {
     flex: 1;
     padding: 24px;
-    background-color: #f9f9f9;
+    background-color: white;
 }
 
 .breadcrumb {

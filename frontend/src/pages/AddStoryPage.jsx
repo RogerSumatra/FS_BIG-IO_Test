@@ -70,7 +70,7 @@ const AddStoryPage = () => {
                 <h1 className="page-title">Add Stories</h1>
 
                 {/* Back Button */}
-                <Link to="/">Back</Link>
+                <Link to="/" className="back-button">Back</Link>
 
                 {/* Content Box */}
                 <div className="content-box">
@@ -82,6 +82,7 @@ const AddStoryPage = () => {
                                 <input
                                     type="text"
                                     name="title"
+                                    className="input-left"
                                     placeholder="Title"
                                     value={storyData.title}
                                     onChange={(e) => setStoryData({ ...storyData, title: e.target.value })}
@@ -93,6 +94,7 @@ const AddStoryPage = () => {
                                 <input
                                     type="text"
                                     name="author"
+                                    className="input-right"
                                     placeholder="Writer Name"
                                     value={storyData.author}
                                     onChange={(e) => setStoryData({ ...storyData, author: e.target.value })}
@@ -108,6 +110,7 @@ const AddStoryPage = () => {
                             <textarea
                                 name="synopsis"
                                 placeholder="Synopsis"
+                                className="input-synopsis"
                                 value={storyData.synopsis}
                                 onChange={e => setStoryData({ ...storyData, synopsis: e.target.value })}
                                 required
@@ -121,6 +124,7 @@ const AddStoryPage = () => {
                                 <select
                                     name="category"
                                     value={storyData.category}
+                                    className="input-category"
                                     onChange={e => setStoryData({ ...storyData, category: e.target.value })}
                                     required
                                 >
@@ -157,12 +161,13 @@ const AddStoryPage = () => {
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Cover Image</label>
-                                <input type="file" accept="image/*" />
+                                <input className="input-left" type="file" accept="image/*" />
                             </div>
                             <div className="form-group">
                                 <label>Status</label>
                                 <select
                                 name="status"
+                
                                 required value={storyData.status}
                                 onChange={e => setStoryData({ ...storyData, status: e.target.value })
 

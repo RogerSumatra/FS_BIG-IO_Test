@@ -41,6 +41,10 @@
     padding: 8px;
 }
 
+.filter-toggle:hover {
+    background-color: #EDEADE;
+}
+
 .filter-img {
     width: 1.3rem;
 }
