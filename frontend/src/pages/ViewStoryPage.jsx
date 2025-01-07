@@ -64,7 +64,7 @@ const ViewStoryPage = () => {
 
                 {/* Back Button */}
                 <button className="back-button" onClick={() => navigate(-1)}>
-                    &lt; Back
+                    Back
                 </button>
 
                 {/* Content Box */}
@@ -75,6 +75,7 @@ const ViewStoryPage = () => {
                             <label>Title</label>
                             <input
                                 type="text"
+                                className="input-left"
                                 name="title"
                                 placeholder="Title"
                                 value={storyData.title}
@@ -86,6 +87,7 @@ const ViewStoryPage = () => {
                             <input
                                 type="text"
                                 name="author"
+                                className="input-right"
                                 placeholder="Writer Name"
                                 value={storyData.author}
                                 readOnly // Input hanya untuk melihat
@@ -99,6 +101,7 @@ const ViewStoryPage = () => {
                         <textarea
                             name="synopsis"
                             placeholder="Synopsis"
+                            className="input-synopsis"
                             value={storyData.synopsis}
                             readOnly // Textarea hanya untuk melihat
                         ></textarea>
@@ -111,7 +114,8 @@ const ViewStoryPage = () => {
                             <select
                                 name="category"
                                 value={storyData.category}
-                                disabled // Tidak bisa diubah
+                                className="input-category"
+                                disabled
                             >
                                 <option value="">Select Category</option>
                                 <option value="Financial">Financial</option>
@@ -121,7 +125,7 @@ const ViewStoryPage = () => {
                         </div>
                         <div className="form-group">
                             <label>Tags/Keywords</label>
-                            <div className="tags-display">
+                            <div className="tags-input">
                                 {storyData.tags.map((tag, index) => (
                                     <span key={index} className="tag">
                                         {tag}
@@ -139,6 +143,7 @@ const ViewStoryPage = () => {
                             <input
                                 type="text"
                                 placeholder="Cover Image URL"
+                                className="input-left"
                                 value="Cover image is not editable in view-only mode."
                                 readOnly
                             />
@@ -154,7 +159,6 @@ const ViewStoryPage = () => {
 
                     {/* Chapter Section */}
                     <div className="chapter-section">
-                        <h2>Chapters</h2>
                         <ChapterTable
                             data={chapterData}
                             storyId={storyid}

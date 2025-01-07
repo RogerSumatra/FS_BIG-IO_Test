@@ -47,7 +47,7 @@ const ViewChapterPage = () => {
 
         {/* Back Button */}
         <button className="back-button" onClick={() => navigate(-1)}>
-          &lt; Back
+          Back
         </button>
 
         {/* Content Box */}
@@ -58,6 +58,7 @@ const ViewChapterPage = () => {
             <input
               type="text"
               placeholder="Title"
+              className="input-title"
               value={chapterTitle}
               readOnly // Input hanya untuk melihat
             />
