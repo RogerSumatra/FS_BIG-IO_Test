@@ -11,6 +11,8 @@ const EditStoryPage = () => {
     const navigate = useNavigate();
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [previewImage, setPreviewImage] = useState("");
 
     const [storyData, setStoryData] = useState({
         title: "",
@@ -19,6 +21,7 @@ const EditStoryPage = () => {
         category: "",
         tags: [],
         status: "",
+        coverImage: "",
     });
 
     const [chapterData, setChapterData] = useState([])
@@ -40,6 +43,7 @@ const EditStoryPage = () => {
             try {
                 const data = await getStoryById(storyid);
                 setStoryData(data);
+                setPreviewImage(data.coverImage);
                 setTags(data.tags);
             } catch (err) {
                 console.error(err);
@@ -56,12 +60,20 @@ const EditStoryPage = () => {
         setStoryData({ ...storyData, [name]: value });
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setSelectedFile(file);
+            setPreviewImage(URL.createObjectURL(file));
+        }
+    };
+
     const handleAddTag = (e) => {
         if (e.key === "Enter" || e.key === ",") {
             e.preventDefault();
             const newTag = tagInput.trim();
             if (newTag && !tags.includes(newTag)) {
-                setTags([...tags, newTag]);
+                setTags([...tags, tagInput[0].toUpperCase() + tagInput.substring(1).trim()]);
             }
             setTagInput("");
         }
@@ -80,7 +92,7 @@ const EditStoryPage = () => {
         setLoading(true);
 
         try {
-            const updatedStoryData = { ...storyData, tags };
+            const updatedStoryData = { ...storyData, tags, coverImage: selectedFile};
             await updateStory(storyid, updatedStoryData);
             alert("Story updated successfully!");
             navigate("/");
@@ -151,7 +163,6 @@ const EditStoryPage = () => {
                                     onChange={handleInputChange}
                                     required
                                 >
-                                    <option value="">Select Category</option>
                                     <option value="Financial">Financial</option>
                                     <option value="Technology">Technology</option>
                                     <option value="Health">Health</option>
@@ -176,13 +187,23 @@ const EditStoryPage = () => {
                             </div>
                         </div>
                         <div className="form-row">
-                            <div className="form-group">
+                        <div className="form-group">
                                 <label>Cover Image</label>
                                 <input
-                                    type="file"
                                     className="input-left"
+                                    type="file"
                                     accept="image/*"
+                                    onChange={handleFileChange}
                                 />
+                                {previewImage && (
+                                    <div className="image-preview">
+                                        <img
+                                            src={previewImage}
+                                            alt="Preview"
+                                            style={{ width: '250px', height: 'auto', marginTop: '10px' }}
+                                        />
+                                    </div>
+                                )}
                             </div>
                             <div className="form-group">
                                 <label>Status</label>

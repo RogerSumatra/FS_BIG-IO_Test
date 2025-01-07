@@ -25,7 +25,7 @@ const AddChapterPage = () => {
             };
             await addChapter(storyid, chapterData);
 
-            navigate(-1);
+            navigate(`/stories/${storyid}/edit`);
         } catch (err) {
             console.error(err);
             setError(err.response?.data?.error || "Failed to add chapter.");
@@ -42,7 +42,7 @@ const AddChapterPage = () => {
                     Stories Management &gt; Add Stories &gt; Add Chapter
                 </p>
                 <h1 className="page-title">Add Chapter</h1>
-                <button className="back-button" onClick={() => navigate(-1)}>
+                <button className="back-button" onClick={() => navigate(`/stories/${storyid}/edit`)}>
                     Back
                 </button>
                 <div className="content-box">
@@ -73,7 +73,7 @@ const AddChapterPage = () => {
                                 onClick={() =>
                                     window.confirm(
                                         "Are you sure you want to cancel without saving?"
-                                    ) && navigate(-1)
+                                    ) && navigate(`/stories/${storyid}/edit`)
                                 }
                             >
                                 Cancel

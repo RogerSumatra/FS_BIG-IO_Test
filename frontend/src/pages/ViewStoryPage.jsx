@@ -17,6 +17,7 @@ const ViewStoryPage = () => {
         category: "",
         tags: [],
         status: "",
+        coverImage: "",
     });
 
     const [chapterData, setChapterData] = useState([]);
@@ -101,7 +102,6 @@ const ViewStoryPage = () => {
                                 className="input-category"
                                 disabled
                             >
-                                <option value="">Select Category</option>
                                 <option value="Financial">Financial</option>
                                 <option value="Technology">Technology</option>
                                 <option value="Health">Health</option>
@@ -121,13 +121,13 @@ const ViewStoryPage = () => {
                     <div className="form-row">
                         <div className="form-group">
                             <label>Cover Image</label>
-                            <input
-                                type="text"
-                                placeholder="Cover Image URL"
-                                className="input-left"
-                                value="Cover image is not editable in view-only mode."
-                                readOnly
-                            />
+                            <div className="image-preview">
+                                <img
+                                    src={storyData.coverImage}
+                                    alt="Preview"
+                                    style={{ width: '250px', height: 'auto', marginTop: '10px' }}
+                                />
+                            </div>
                         </div>
                         <div className="form-group">
                             <label>Status</label>

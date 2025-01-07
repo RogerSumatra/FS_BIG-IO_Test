@@ -9,8 +9,9 @@ const AddStoryPage = () => {
     const navigate = useNavigate();
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState("");
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [previewImage, setPreviewImage] = useState("");
 
-    const [title, setTitle] = useState("");
     const [storyData, setStoryData] = useState({
         title: "",
         author: "",
@@ -18,13 +19,14 @@ const AddStoryPage = () => {
         category: "",
         tags: [],
         status: "",
+        coverImage: "",
     });
 
     const handleAddTag = (e) => {
         if (e.key === "Enter" || e.key === ",") {
             e.preventDefault();
             if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-                setTags([...tags, tagInput.trim()]);
+                setTags([...tags, tagInput[0].toUpperCase() + tagInput.substring(1).trim()]);
             }
             setTagInput("");
         }
@@ -34,19 +36,36 @@ const AddStoryPage = () => {
         setTags(tags.filter((t) => t !== tag));
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setSelectedFile(file);
+            setPreviewImage(URL.createObjectURL(file));
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
-            const dataToSubmit = {
-                ...storyData,
-                tags: tags,
-            };
-            await addStory(dataToSubmit);
-            alert("Story and chapters saved successfully!");
-            navigate("/");
+            const formData = new FormData();
+            formData.append("coverImage", selectedFile);
+            formData.append("title", storyData.title);
+            formData.append("author", storyData.author);
+            formData.append("synopsis", storyData.synopsis);
+            formData.append("category", storyData.category);
+            formData.append("tags", tags);
+            formData.append("status", storyData.status);
+
+            const response = await addStory(formData);
+            const storyId = response.story.id;
+
+            alert("Story and cover image saved successfully!");
+            navigate(`/stories/${storyId}/chapter`);
+
         } catch (error) {
             console.error("Error saving story:", error.message);
-            alert("Failed to save story and chapters");
+            alert("Failed to save story and cover image");
         }
     };
 
@@ -139,8 +158,23 @@ const AddStoryPage = () => {
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Cover Image</label>
-                                <input className="input-left" type="file" accept="image/*" />
+                                <input
+                                    className="input-left"
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                />
+                                {previewImage && (
+                                    <div className="image-preview">
+                                        <img
+                                            src={previewImage}
+                                            alt="Preview"
+                                            style={{ width: '250px', height: 'auto', marginTop: '10px' }}
+                                        />
+                                    </div>
+                                )}
                             </div>
+
                             <div className="form-group">
                                 <label>Status</label>
                                 <select

@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const multer = require('multer');
+const path = require('path');
 const sequelize = require('./config/database');
 const { Story, Chapter } = require('./models/relation');
 
@@ -8,6 +10,19 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    },
+});
+
+const upload = multer({ storage });
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 sequelize.authenticate()
     .then(() => console.log('Connected to Database'))
@@ -44,41 +59,53 @@ app.get('/api/stories/:storyid', async (req, res) => {
     }
 });
 
-app.post('/api/stories', async (req, res) => {
+app.post('/api/stories', upload.single('coverImage'), async (req, res) => {
     try {
         const { title, author, synopsis, category, tags, status } = req.body;
 
-        if (!title || !author || !synopsis || !category || !status) {
-            return res.status(400).json({ error: "All fields are required" });
-        }
+        const coverImage = req.file
+            ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+            : null;
 
         const newStory = await Story.create({
             title,
             author,
             synopsis,
             category,
-            tags: Array.isArray(tags) ? tags.join(',') : "",
+            tags,
             status,
+            coverImage,
         });
-        res.status(201).json(newStory);
+
+        res.status(201).json({ message: 'Story created successfully', story: newStory });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        console.error('Error creating story:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 
-app.put('/api/stories/:storyid', async (req, res) => {
+app.put('/api/stories/:storyid', upload.single('coverImage'), async (req, res) => {
     try {
         const story = await Story.findByPk(req.params.storyid);
         if (!story) {
             return res.status(404).json({ error: 'Story not found' });
         }
+        
         const { title, author, synopsis, category, tags, status } = req.body;
+
+        // Periksa apakah ada file baru yang diunggah
+        const coverImage = req.file
+            ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+            : story.coverImage; // Gunakan gambar yang ada jika tidak ada file baru
+            
         story.title = title;
         story.author = author;
         story.synopsis = synopsis;
         story.category = category;
         story.tags = tags.join(',');
         story.status = status;
+        story.coverImage = coverImage;
+
         await story.save();
         res.json(story);
     } catch (error) {
@@ -182,7 +209,6 @@ app.delete('/api/chapter/:chapterid', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
